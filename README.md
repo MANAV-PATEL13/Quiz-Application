@@ -62,6 +62,23 @@ Login (enter name) --> Rules (show rules) --> Quiz (10 questions, timer, lifelin
 
 Entry point: `quiz.app.Login` (`main`).
 
+## OOP Concepts Used
+
+- **Encapsulation**: Each screen is a class (`Login`, `Rules`, `Quiz`, `Score`) bundling its own state and behavior; fields like `text`, `Next`, `back` are instance fields.
+- **Inheritance**: Every screen `extends JFrame` and inherits window behavior; event handling via `implements ActionListener`.
+- **Polymorphism**: `actionPerformed(ActionEvent e)` overrides the interface method; branching on `e.getSource()` selects behavior.
+- **Abstraction**: UI details hidden behind constructors; callers just do `new Quiz(name)`.
+- **Composition**: `Quiz` composes `JLabel`, `JRadioButton`, `ButtonGroup`, `JButton` objects; `Login` composes an `ImageIcon`-backed `JLabel`.
+- **Static members**: `timer`, `count`, `score`, `ans_given` are `static`, shared across instances/repaints (class-level state).
+
+### Examples in this project
+
+- **Encapsulation (button)**: In `Login`, `JButton Next, back;` are fields; their text, colors, and listeners are set inside the constructor, hiding setup details from other classes.
+- **Inheritance (screen)**: `public class Quiz extends JFrame implements ActionListener` — `Quiz` IS-A `JFrame` and IS-A `ActionListener`.
+- **Polymorphism (button click)**: `public void actionPerformed(ActionEvent e)` handles every button; `if (e.getSource() == next) ... else if (lifeline) ... else if (submit)` picks the right action.
+- **Abstraction (screen creation)**: `new Rules(name)` / `new Quiz(name)` / `new Score(name, score)` — callers don't care how the UI is built.
+- **Composition (options)**: `Quiz` has `JRadioButton opt1..opt4` and a `ButtonGroup groupoptions`; options are composed into the quiz screen and grouped for single selection.
+- **Static (timer/score)**: `public static int timer = 15;` and `public static int score = 0;` keep values alive while `paint()` repaints and across questions.
 ## Key Concepts to Learn (Java + Swing)
 
 - **JFrame & layout**: `setLayout(null)` + `setBounds(...)` = absolute positioning.
